@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         FragmentManager fmanager = getSupportFragmentManager();
-/*
+
         if (id == R.id.nav_profile) {
             Fragment frag = new ProfilePageFrag();
             fmanager.beginTransaction().replace(R.id.frag_container, frag).commit();
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
             Fragment frag = new ProposePageFrag();
             fmanager.beginTransaction().replace(R.id.frag_container, frag).commit();
         }
-*/
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
