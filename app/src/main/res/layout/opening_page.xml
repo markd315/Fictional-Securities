@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="8dp"
+        android:id="@+id/ticker_search" />
+
+
+    <TextView
+        android:id="@+id/portfolio_money"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:ems="88"
+        android:text="PORTFOLIO MONEY"
+        android:layout_margin="8dp"
+        android:layout_below="@id/ticker_search"/>
+
+    <com.robinhood.spark.SparkView
+        android:id="@+id/portfolio_sparkline"
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:layout_margin="8dp"
+        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
+        android:layout_below="@id/portfolio_money"/>
+
+</RelativeLayout>

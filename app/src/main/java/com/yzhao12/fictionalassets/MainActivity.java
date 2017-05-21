@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        fmanager.beginTransaction().replace(R.id.frag_container, new OpeningPageFrag()).commit();
     }
 
     @Override
@@ -74,21 +77,22 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        FragmentManager fmanager = getSupportFragmentManager();
+
+        Fragment frag = null;
 
         if (id == R.id.nav_profile) {
-            Fragment frag = new ProfilePageFrag();
-            fmanager.beginTransaction().replace(R.id.frag_container, frag).commit();
+            frag = new ProfilePageFrag();
         } else if (id == R.id.nav_vote) {
-            Fragment frag = new MemePageFrag();
-            fmanager.beginTransaction().replace(R.id.frag_container, frag).commit();
+            frag = new MemePageFrag();
         } else if (id == R.id.nav_propose) {
-            Fragment frag = new ProposePageFrag();
-            fmanager.beginTransaction().replace(R.id.frag_container, frag).commit();
+            frag = new ProposePageFrag();
         }
+        fmanager.beginTransaction().replace(R.id.frag_container, frag).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private FragmentManager fmanager = getSupportFragmentManager();
 }
