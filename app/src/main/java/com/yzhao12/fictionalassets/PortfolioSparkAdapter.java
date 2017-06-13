@@ -8,8 +8,6 @@ import com.robinhood.spark.SparkView;
  */
 
 public class PortfolioSparkAdapter extends SparkAdapter {
-    private float[] yData;
-
     public PortfolioSparkAdapter(float[] data) {
         this.yData = data;
     }
@@ -25,4 +23,7 @@ public class PortfolioSparkAdapter extends SparkAdapter {
     public float getY(int index) {
         return yData[index];
     }
+
+
+    private float[] yData;
 }
