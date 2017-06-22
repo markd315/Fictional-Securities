@@ -80,12 +80,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         Fragment frag = null;
 
-        if (id == R.id.nav_profile) {
+        if (id == R.id.nav_home) {
+            frag = new OpeningPageFrag();
+        } else if (id == R.id.nav_profile) {
             frag = new ProfilePageFrag();
         } else if (id == R.id.nav_vote) {
             frag = new MemePageFrag();
-        } else if (id == R.id.nav_propose) {
-            frag = new ProposePageFrag();
         }
         fmanager.beginTransaction().replace(R.id.frag_container, frag).commit();
 
