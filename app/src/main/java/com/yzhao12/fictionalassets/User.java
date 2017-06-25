@@ -47,6 +47,22 @@ public class User {
         m_uid = uid;
     }
 
+    public int getUserMoney() {
+        return m_userMoney;
+    }
+
+    public void setUserMoney(int userMoney) {
+        m_userMoney = userMoney;
+    }
+
+    public PortfolioItem[] getUserPortfolio() {
+        return m_userPortfolio;
+    }
+
+    public void setUserPortfolio(PortfolioItem[] userPortfolio) {
+        m_userPortfolio = userPortfolio;
+    }
+
 
 
     private FirebaseUser m_userInstance;
@@ -56,5 +72,7 @@ public class User {
     private String m_email;
     private Uri m_profilePicUrl;
     private String m_uid;
+    private int m_userMoney;
+    private PortfolioItem[] m_userPortfolio;
 
 }
