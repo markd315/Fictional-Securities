@@ -22,7 +22,6 @@ public class PortfolioItem {
         m_shares = shares;
     }
 
-
     private String m_ticker;
     private int m_shares;
 }
