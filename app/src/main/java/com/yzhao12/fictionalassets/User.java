@@ -67,7 +67,7 @@ public class User {
 
     private FirebaseUser m_userInstance;
 
-    //Might need to extrace string from Firebase.Promise
+    //Might need to extract string from Firebase.Promise
     private String m_userName;
     private String m_email;
     private Uri m_profilePicUrl;
