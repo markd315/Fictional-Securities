@@ -15,8 +15,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = m_auth.getCurrentUser();
+        if(currentUser != null) {
+            //TODO
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +47,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-        fmanager.beginTransaction().replace(R.id.frag_container, new OpeningPageFrag()).commit();
+        m_fmanager = getSupportFragmentManager();
+        m_fmanager.beginTransaction().replace(R.id.frag_container, new OpeningPageFrag()).commit();
+        m_auth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -87,12 +100,14 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_vote) {
             frag = new MemePageFrag();
         }
-        fmanager.beginTransaction().replace(R.id.frag_container, frag).commit();
+        m_fmanager.beginTransaction().replace(R.id.frag_container, frag).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    private FragmentManager fmanager = getSupportFragmentManager();
+    private FragmentManager m_fmanager;
+    private FirebaseAuth m_auth;
+    private User m_currentUser;
 }
