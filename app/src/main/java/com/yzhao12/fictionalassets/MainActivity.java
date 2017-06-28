@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,8 +49,12 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         m_fmanager = getSupportFragmentManager();
-        m_fmanager.beginTransaction().replace(R.id.frag_container, new OpeningPageFrag()).commit();
         m_auth = FirebaseAuth.getInstance();
+        m_database = FirebaseDatabase.getInstance();
+
+
+        m_fmanager.beginTransaction().replace(R.id.frag_container, new OpeningPageFrag()).commit();
+
     }
 
     @Override
@@ -110,4 +115,5 @@ public class MainActivity extends AppCompatActivity
     private FragmentManager m_fmanager;
     private FirebaseAuth m_auth;
     private User m_currentUser;
+    private FirebaseDatabase m_database;
 }
