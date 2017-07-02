@@ -40,6 +40,15 @@ public class MainActivity extends AppCompatActivity
         if(currentUser != null) {
             m_ref = m_database.getReference("users");
 
+            m_authListener = new FirebaseAuth.AuthStateListener() {
+                @Override
+                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+                }
+            };
+
+
+
             m_ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -78,11 +87,24 @@ public class MainActivity extends AppCompatActivity
 
         m_fmanager = getSupportFragmentManager();
         m_auth = FirebaseAuth.getInstance();
+
         m_database = FirebaseDatabase.getInstance();
 
 
         m_fmanager.beginTransaction().replace(R.id.frag_container, new OpeningPageFrag()).commit();
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        m_auth.removeAuthStateListener(m_authListener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        m_auth.addAuthStateListener(m_authListener);
     }
 
     @Override
@@ -157,12 +179,15 @@ public class MainActivity extends AppCompatActivity
                 });
     }
 
-    public void addUserToDatabase(String username, Uri profilePic,)
+    public void addUserToDatabase(String username, Uri profilePic, ) {
+
+    }
 
 
     private FirebaseUser m_fireUser;
     private FragmentManager m_fmanager;
     private FirebaseAuth m_auth;
+    private FirebaseAuth.AuthStateListener m_authListener;
     private User m_currentUser;
     private FirebaseDatabase m_database;
     private DatabaseReference m_ref;
