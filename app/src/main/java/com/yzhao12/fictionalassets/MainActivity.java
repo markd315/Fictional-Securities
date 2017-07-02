@@ -3,7 +3,6 @@ package com.yzhao12.fictionalassets;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -48,11 +47,13 @@ public class MainActivity extends AppCompatActivity
                 public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                     FirebaseUser user = firebaseAuth.getCurrentUser();
                     if(user != null) {
+                        Toast.makeText(MainActivity.this, "SIGNED IN", Toast.LENGTH_SHORT).show();
 
                     } else {
                         startActivityForResult(
                                 AuthUI.getInstance()
                                         .createSignInIntentBuilder()
+                                        .setIsSmartLockEnabled(false)
                                         .setAvailableProviders(
                                                 Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build()))
                                         .build(),
@@ -176,6 +177,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /*
     public void createAccount(String email, String password) {
         m_auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -192,6 +194,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
     }
+    */
 
     public void addUserToDatabase(String username, Uri profilePic, ) {
 
