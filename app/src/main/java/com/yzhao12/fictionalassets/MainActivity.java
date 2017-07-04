@@ -42,27 +42,6 @@ public class MainActivity extends AppCompatActivity
         if(currentUser != null) {
             m_ref = m_database.getReference("users");
 
-            m_authListener = new FirebaseAuth.AuthStateListener() {
-                @Override
-                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    if(user != null) {
-                        Toast.makeText(MainActivity.this, "SIGNED IN", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        startActivityForResult(
-                                AuthUI.getInstance()
-                                        .createSignInIntentBuilder()
-                                        .setIsSmartLockEnabled(false)
-                                        .setAvailableProviders(
-                                                Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build()))
-                                        .build(),
-                                RC_SIGN_IN);
-                    }
-                }
-            };
-
-
 
             m_ref.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -102,6 +81,27 @@ public class MainActivity extends AppCompatActivity
 
         m_fmanager = getSupportFragmentManager();
         m_auth = FirebaseAuth.getInstance();
+        m_authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user != null) {
+                    Toast.makeText(MainActivity.this, "SIGNED IN", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    startActivityForResult(
+                            AuthUI.getInstance()
+                                    .createSignInIntentBuilder()
+                                    .setIsSmartLockEnabled(false)
+                                    .setAvailableProviders(
+                                            Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build()))
+                                    .build(),
+                            RC_SIGN_IN);
+
+
+                }
+            }
+        };
 
         m_database = FirebaseDatabase.getInstance();
 
