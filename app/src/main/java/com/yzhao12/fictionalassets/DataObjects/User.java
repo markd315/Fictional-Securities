@@ -1,7 +1,8 @@
-package com.yzhao12.fictionalassets;
+package com.yzhao12.fictionalassets.DataObjects;
 
 import android.net.Uri;
 import com.google.firebase.auth.FirebaseUser;
+import com.yzhao12.fictionalassets.DataObjects.PortfolioItem;
 
 /**
  * Created by Yang on 6/17/2017.

@@ -1,4 +1,4 @@
-package com.yzhao12.fictionalassets;
+package com.yzhao12.fictionalassets.Adapters;
 
 import com.robinhood.spark.SparkAdapter;
 import com.robinhood.spark.SparkView;
