@@ -19,11 +19,12 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
-        initVariables();
+        //setContentView(R.layout.login);
+        auth = FirebaseAuth.getInstance();
 
         if(auth.getCurrentUser() != null) {
-
+            setResult(RESULT_OK);
+            finish();
         } else {
             startActivityForResult(
                     AuthUI.getInstance().createSignInIntentBuilder()
@@ -33,22 +34,18 @@ public class LoginActivity extends Activity {
         }
     }
 
-    private void initVariables() {
-        auth = FirebaseAuth.getInstance();
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
                 // Sign-in succeeded, set up the UI
-                Toast.makeText(this, "Signed in loginac!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show();
                 setResult(RESULT_OK);
                 finish();
             } else {
                 // Sign in was canceled by the user, finish the activity
-                Toast.makeText(this, "Sign in failed loginac", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Sign in failed", Toast.LENGTH_SHORT).show();
                 startActivityForResult(
                         AuthUI.getInstance().createSignInIntentBuilder().build(),
                         RC_SIGN_IN
