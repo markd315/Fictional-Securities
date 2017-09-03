@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by Yang on 8/31/2017.
@@ -21,6 +22,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.login);
         auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
 
         if(auth.getCurrentUser() != null) {
             setResult(RESULT_OK);
@@ -61,5 +63,5 @@ public class LoginActivity extends Activity {
 
     private FirebaseAuth auth;
     private static final int RC_SIGN_IN = 2;
-
+    private FirebaseDatabase database;
 }
