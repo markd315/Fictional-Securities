@@ -25,11 +25,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.yzhao12.fictionalassets.DataObjects.PortfolioItem;
 import com.yzhao12.fictionalassets.DataObjects.User;
 import com.yzhao12.fictionalassets.Fragments.MemePageFrag;
 import com.yzhao12.fictionalassets.Fragments.OpeningPageFrag;
 import com.yzhao12.fictionalassets.Fragments.ProfilePageFrag;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_page);
         m_auth = FirebaseAuth.getInstance();
-        m_database = FirebaseDatabase.getInstance().getReference();
+        m_database = FirebaseDatabase.getInstance().getReference().child("Users");
     }
 
     public void login(View view) {
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         if(currentUser != null) {
             startActivity(new Intent(this, HomepageActivity.class));
         } else {
+            Log.wtf("zhao:", "STARTING AUTHUI");
+
             Intent login = new Intent(this, LoginActivity.class);
             startActivityForResult(login, RC_LOGIN_ACTIVITY);
         }
@@ -65,13 +69,17 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Sign-in succeeded, set up the UI
                 Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show();
+                Log.wtf("zhao:", "AFTER AUTHUI");
+                Log.wtf("zhao:", m_auth.getCurrentUser().getUid());
 
                 ValueEventListener userInfoListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.wtf("zhao:", dataSnapshot.toString());
                         if(!dataSnapshot.exists()) {
-                            User newUser = new User(null, -1, null);
-                            m_database.child("Users").child(m_auth.getCurrentUser().getUid()).setValue(newUser);
+                            ArrayList<PortfolioItem> emptyPortfolio = new ArrayList<PortfolioItem>();
+                            User newUser = new User(null, 5000, emptyPortfolio);
+                            m_database.child(m_auth.getCurrentUser().getUid()).setValue(newUser);
                         }
                     }
 
@@ -81,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.w("zhao:", "loadPost:onCancelled", databaseError.toException());
                     }
                 };
-                m_database.addListenerForSingleValueEvent(userInfoListener);
+                m_database.child(m_auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(userInfoListener);
 
                 startActivity(new Intent(this, HomepageActivity.class));
             } else {

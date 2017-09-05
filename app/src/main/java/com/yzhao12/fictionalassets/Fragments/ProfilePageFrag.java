@@ -49,12 +49,16 @@ public class ProfilePageFrag extends Fragment {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                profileMoney.setText(dataSnapshot.getValue(User.class).getUserMoney());
-                ArrayList<PortfolioItem> portfolio = dataSnapshot.getValue(User.class).getUserPortfolio();
-                portfolioAdapter = new PortfolioAdapter(getActivity(), R.layout.profile_portfolio_item, portfolio);
-                portfolioList.setAdapter(portfolioAdapter);
+                if (dataSnapshot.getValue(User.class) != null) {
+                    profileMoney.setText(Integer.toString(dataSnapshot.getValue(User.class).getUserMoney()));
+                    Log.wtf("zhao:", Integer.toString(dataSnapshot.getValue(User.class).getUserMoney()));
+                    ArrayList<PortfolioItem> portfolio = dataSnapshot.getValue(User.class).getUserPortfolio();
+                    portfolioAdapter = new PortfolioAdapter(getActivity(), R.layout.profile_portfolio_item, portfolio);
+                    if (portfolio != null) {
+                        portfolioList.setAdapter(portfolioAdapter);
+                    }
+                }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.w("zhao:", "loadPost:onCancelled", databaseError.toException());
