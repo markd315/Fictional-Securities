@@ -65,9 +65,6 @@ public class LoginActivity extends Activity {
 
 
 
-
-
-
     private FirebaseAuth auth;
     private static final int RC_SIGN_IN = 2;
     private FirebaseDatabase database;
