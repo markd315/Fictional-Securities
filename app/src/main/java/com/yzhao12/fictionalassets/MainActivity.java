@@ -69,14 +69,19 @@ public class MainActivity extends AppCompatActivity {
                 ValueEventListener userInfoListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()) {
-
+                        if(!dataSnapshot.exists()) {
+                            User newUser = new User(null, -1, null);
+                            m_database.child("Users").child(m_auth.getCurrentUser().getUid()).setValue(newUser);
                         }
+                    }
 
-                        User user = dataSnapshot.getValue(Post.class);
-                        // ...
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Getting user info failed, log a message
+                        Log.w("zhao:", "loadPost:onCancelled", databaseError.toException());
                     }
                 };
+                m_database.addListenerForSingleValueEvent(userInfoListener);
 
                 startActivity(new Intent(this, HomepageActivity.class));
             } else {

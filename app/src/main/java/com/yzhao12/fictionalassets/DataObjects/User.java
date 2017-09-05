@@ -1,6 +1,8 @@
 package com.yzhao12.fictionalassets.DataObjects;
 
 import android.net.Uri;
+import android.os.Parcelable;
+
 import com.google.firebase.auth.FirebaseUser;
 import com.yzhao12.fictionalassets.DataObjects.PortfolioItem;
 
