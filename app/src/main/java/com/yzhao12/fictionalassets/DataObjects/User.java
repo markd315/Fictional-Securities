@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.firebase.auth.FirebaseUser;
 import com.yzhao12.fictionalassets.DataObjects.PortfolioItem;
 
+import java.util.ArrayList;
+
 /**
  * Created by Yang on 6/17/2017.
  */
@@ -15,7 +17,7 @@ public class User {
 
     }
 
-    public User(Uri profilePicUrl, int money, PortfolioItem[] portfolio) {
+    public User(Uri profilePicUrl, int money, ArrayList<PortfolioItem> portfolio) {
         m_profilePicUrl = profilePicUrl;
         m_userMoney = money;
         m_userPortfolio = portfolio;
@@ -37,20 +39,19 @@ public class User {
         m_userMoney = userMoney;
     }
 
-    public PortfolioItem[] getUserPortfolio() {
+    public ArrayList<PortfolioItem> getUserPortfolio() {
         return m_userPortfolio;
     }
 
-    public void setUserPortfolio(PortfolioItem[] userPortfolio) {
+    public void setUserPortfolio(ArrayList<PortfolioItem> userPortfolio) {
         m_userPortfolio = userPortfolio;
     }
-
 
 
     private FirebaseUser m_userInstance;
 
     private Uri m_profilePicUrl;
     private int m_userMoney;
-    private PortfolioItem[] m_userPortfolio;
+    private ArrayList<PortfolioItem> m_userPortfolio;
 
 }
