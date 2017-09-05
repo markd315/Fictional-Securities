@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_page);
         m_auth = FirebaseAuth.getInstance();
+        m_database = FirebaseDatabase.getInstance().getReference();
     }
 
     public void login(View view) {
@@ -64,6 +65,19 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Sign-in succeeded, set up the UI
                 Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show();
+
+                ValueEventListener userInfoListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()) {
+
+                        }
+
+                        User user = dataSnapshot.getValue(Post.class);
+                        // ...
+                    }
+                };
+
                 startActivity(new Intent(this, HomepageActivity.class));
             } else {
                 // Sign in was canceled by the user, finish the activity
@@ -85,5 +99,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private FirebaseAuth m_auth;
+    private DatabaseReference m_database;
     public static final int RC_LOGIN_ACTIVITY = 1;
 }

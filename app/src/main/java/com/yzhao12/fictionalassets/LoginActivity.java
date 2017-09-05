@@ -12,6 +12,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Yang on 8/31/2017.
  */
@@ -28,9 +31,13 @@ public class LoginActivity extends Activity {
             setResult(RESULT_OK);
             finish();
         } else {
+            List<AuthUI.IdpConfig> providers = new ArrayList<>();
+            providers.add(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build());
             startActivityForResult(
                     AuthUI.getInstance().createSignInIntentBuilder()
-                            .setIsSmartLockEnabled(false).build(),
+                            .setIsSmartLockEnabled(false)
+                            .setAvailableProviders(providers)
+                            .build(),
                     RC_SIGN_IN
             );
         }

@@ -9,27 +9,14 @@ import com.yzhao12.fictionalassets.DataObjects.PortfolioItem;
  */
 
 public class User {
-    public User(FirebaseUser userInstance) {
-        m_userName = userInstance.getDisplayName();
-        m_email = userInstance.getEmail();
-        m_profilePicUrl = userInstance.getPhotoUrl();
-        m_uid = userInstance.getUid();
+    public User() {
+
     }
 
-    public String getM_userName() {
-        return m_userName;
-    }
-
-    public void setM_userName(String userName) {
-        m_userName = userName;
-    }
-
-    public String getM_email() {
-        return m_email;
-    }
-
-    public void setM_email(String email) {
-        m_email = email;
+    public User(Uri profilePicUrl, int money, PortfolioItem[] portfolio) {
+        m_profilePicUrl = profilePicUrl;
+        m_userMoney = money;
+        m_userPortfolio = portfolio;
     }
 
     public Uri getM_profilePicUrl() {
@@ -38,14 +25,6 @@ public class User {
 
     public void setM_profilePicUrl(Uri profilePicUrl) {
         m_profilePicUrl = profilePicUrl;
-    }
-
-    public String getM_uid() {
-        return m_uid;
-    }
-
-    public void setM_uid(String uid) {
-        m_uid = uid;
     }
 
     public int getUserMoney() {
@@ -68,11 +47,7 @@ public class User {
 
     private FirebaseUser m_userInstance;
 
-    //Might need to extract string from Firebase.Promise
-    private String m_userName;
-    private String m_email;
     private Uri m_profilePicUrl;
-    private String m_uid;
     private int m_userMoney;
     private PortfolioItem[] m_userPortfolio;
 

@@ -30,8 +30,8 @@ public class ProfilePageFrag extends Fragment {
         profileName = (TextView)view.findViewById(R.id.profile_name);
         profileMoney = (TextView)view.findViewById(R.id.profile_money);
 
-        profileName.setText(m_auth.getCurrentUser().getEmail());
-        profileMoney.setText()
+        profileName.setText(m_auth.getCurrentUser().getDisplayName());
+//        profileMoney.setText()
         return view;
     }
 
