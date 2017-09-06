@@ -28,6 +28,7 @@ import com.yzhao12.fictionalassets.DataObjects.User;
 import com.yzhao12.fictionalassets.Fragments.MemePageFrag;
 import com.yzhao12.fictionalassets.Fragments.OpeningPageFrag;
 import com.yzhao12.fictionalassets.Fragments.ProfilePageFrag;
+import com.yzhao12.fictionalassets.Fragments.ProposePageFrag;
 
 import java.util.Arrays;
 
@@ -157,7 +158,7 @@ public class HomepageActivity extends AppCompatActivity
         } else if (id == R.id.nav_profile) {
             frag = new ProfilePageFrag();
         } else if (id == R.id.nav_vote) {
-            frag = new MemePageFrag();
+            frag = new ProposePageFrag();
         }
         m_fmanager.beginTransaction().replace(R.id.frag_container, frag).commit();
 
