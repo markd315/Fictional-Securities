@@ -1,9 +1,7 @@
 package com.yzhao12.fictionalassets;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -14,9 +12,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,12 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.yzhao12.fictionalassets.DataObjects.User;
-import com.yzhao12.fictionalassets.Fragments.MemePageFrag;
 import com.yzhao12.fictionalassets.Fragments.OpeningPageFrag;
 import com.yzhao12.fictionalassets.Fragments.ProfilePageFrag;
 import com.yzhao12.fictionalassets.Fragments.ProposePageFrag;
-
-import java.util.Arrays;
 
 public class HomepageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -167,10 +162,10 @@ public class HomepageActivity extends AppCompatActivity
         return true;
     }
 
-//
-//    public void addUserToDatabase(String username, Uri profilePic, ) {
-//
-//    }
+
+    public void testMemepage(View view) {
+        startActivity(new Intent(this, MemeActivity.class));
+    }
 
 
     private FirebaseUser m_fireUser;
