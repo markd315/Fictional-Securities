@@ -32,7 +32,7 @@ public class PortfolioAdapter extends ArrayAdapter<PortfolioItem> {
         TextView shares = (TextView)convertView.findViewById(R.id.profile_shares);
 
         ticker.setText(item.getTicker());
-        shares.setText(item.getShares());
+        shares.setText(Integer.toString(item.getShares()));
 
         return convertView;
     }

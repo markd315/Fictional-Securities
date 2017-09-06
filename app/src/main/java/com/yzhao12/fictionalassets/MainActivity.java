@@ -54,11 +54,13 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = m_auth.getCurrentUser();
         if(currentUser != null) {
             startActivity(new Intent(this, HomepageActivity.class));
+            finish();
         } else {
             Log.wtf("zhao:", "STARTING AUTHUI");
 
             Intent login = new Intent(this, LoginActivity.class);
             startActivityForResult(login, RC_LOGIN_ACTIVITY);
+            finish();
         }
     }
 
@@ -78,6 +80,16 @@ public class MainActivity extends AppCompatActivity {
                         Log.wtf("zhao:", dataSnapshot.toString());
                         if(!dataSnapshot.exists()) {
                             ArrayList<PortfolioItem> emptyPortfolio = new ArrayList<PortfolioItem>();
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
+
                             User newUser = new User(null, 5000, emptyPortfolio);
                             m_database.child(m_auth.getCurrentUser().getUid()).setValue(newUser);
                         }

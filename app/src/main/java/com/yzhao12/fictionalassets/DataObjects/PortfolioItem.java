@@ -5,6 +5,15 @@ package com.yzhao12.fictionalassets.DataObjects;
  */
 
 public class PortfolioItem {
+    public PortfolioItem() {
+        m_ticker = "";
+        m_shares = -1;
+    }
+
+    public PortfolioItem(String ticker, int shares) {
+        m_ticker = ticker;
+        m_shares = shares;
+    }
 
     public String getTicker() {
         return m_ticker;
