@@ -22,4 +22,6 @@ public class MemeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+
+
 }
