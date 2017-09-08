@@ -9,10 +9,11 @@ public class Meme {
 
     }
 
-    public Meme(String name, float[] historicalPrices, int issuedShares, String exampleUrl) {
+    public Meme(String name, String ticker, String description, float[] historicalPrices, String exampleUrl) {
         m_name = name;
+        m_ticker = ticker;
+        m_description = description;
         m_historicalPrices = historicalPrices;
-        m_issuedShares = issuedShares;
         m_exampleUrl = exampleUrl;
     }
 
@@ -24,20 +25,28 @@ public class Meme {
         m_name = name;
     }
 
+    public String getTicker() {
+        return m_ticker;
+    }
+
+    public void setTicker(String ticker) {
+        m_ticker = ticker;
+    }
+
+    public String getDescription() {
+        return m_description;
+    }
+
+    public void setDescription(String description) {
+        m_description = description;
+    }
+
     public float[] getHistoricalPrices() {
         return m_historicalPrices;
     }
 
     public void setHistoricalPrices(float[] historicalPrices) {
         m_historicalPrices = historicalPrices;
-    }
-
-    public int getIssuedShares() {
-        return m_issuedShares;
-    }
-
-    public void setIssuedShares(int issuedShares) {
-        m_issuedShares = issuedShares;
     }
 
     public String getExampleUrl() {
@@ -51,7 +60,8 @@ public class Meme {
 
 
     private String m_name;
+    private String m_ticker;
+    private String m_description;
     private float[] m_historicalPrices;
-    private int m_issuedShares;
     private String m_exampleUrl;
 }

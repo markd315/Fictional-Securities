@@ -19,11 +19,5 @@
 
     </FrameLayout>
 
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:onClick="testMemepage"/>
-
-
 
 </android.support.constraint.ConstraintLayout>
