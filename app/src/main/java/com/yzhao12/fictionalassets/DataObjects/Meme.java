@@ -9,12 +9,11 @@ public class Meme {
 
     }
 
-    public Meme(String name, String ticker, String description, float[] historicalPrices, String exampleUrl) {
+    public Meme(String name, String ticker, String description, float[] historicalPrices) {
         m_name = name;
         m_ticker = ticker;
         m_description = description;
         m_historicalPrices = historicalPrices;
-        m_exampleUrl = exampleUrl;
     }
 
     public String getName() {
@@ -49,19 +48,10 @@ public class Meme {
         m_historicalPrices = historicalPrices;
     }
 
-    public String getExampleUrl() {
-        return m_exampleUrl;
-    }
-
-    public void setExampleUrl(String exampleUrl) {
-        m_exampleUrl = exampleUrl;
-    }
-
 
 
     private String m_name;
     private String m_ticker;
     private String m_description;
     private float[] m_historicalPrices;
-    private String m_exampleUrl;
 }
