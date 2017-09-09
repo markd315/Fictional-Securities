@@ -31,7 +31,7 @@ public class Transaction {
         m_price = price;
     }
 
-    public Time getM_timestamp() {
+    public Time getTimestamp() {
         return m_timestamp;
     }
 
@@ -39,7 +39,7 @@ public class Transaction {
         m_timestamp = timestamp;
     }
 
-    public int getM_userid() {
+    public int getUserid() {
         return m_userid;
     }
 

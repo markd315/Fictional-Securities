@@ -1,5 +1,9 @@
 package com.yzhao12.fictionalassets.DataObjects;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Queue;
+
 /**
  * Created by Yang on 6/16/2017.
  */
@@ -9,11 +13,12 @@ public class Meme {
 
     }
 
-    public Meme(String name, String ticker, String description, float[] historicalPrices) {
+    public Meme(String name, String ticker, String description, ArrayList<Transaction> buy, ArrayList<Transaction> sell) {
         m_name = name;
         m_ticker = ticker;
         m_description = description;
-        m_historicalPrices = historicalPrices;
+        m_buy = buy;
+        m_sell = sell;
     }
 
     public String getName() {
@@ -40,18 +45,25 @@ public class Meme {
         m_description = description;
     }
 
-    public float[] getHistoricalPrices() {
-        return m_historicalPrices;
+    public ArrayList<Transaction> getBuy() {
+        return m_buy;
     }
 
-    public void setHistoricalPrices(float[] historicalPrices) {
-        m_historicalPrices = historicalPrices;
+    public void setBuy(ArrayList<Transaction> buy) {
+        m_buy = buy;
     }
 
+    public ArrayList<Transaction> getSell() {
+        return m_sell;
+    }
 
+    public void setSell(ArrayList<Transaction> sell) {
+        m_sell = sell;
+    }
 
     private String m_name;
     private String m_ticker;
     private String m_description;
-    private float[] m_historicalPrices;
+    private ArrayList<Transaction> m_buy;
+    private ArrayList<Transaction> m_sell;
 }
