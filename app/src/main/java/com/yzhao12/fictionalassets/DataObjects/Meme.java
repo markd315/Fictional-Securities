@@ -1,8 +1,6 @@
 package com.yzhao12.fictionalassets.DataObjects;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Queue;
 
 /**
  * Created by Yang on 6/16/2017.
@@ -64,6 +62,7 @@ public class Meme {
     private String m_name;
     private String m_ticker;
     private String m_description;
+
     private ArrayList<Transaction> m_buy;
     private ArrayList<Transaction> m_sell;
 }

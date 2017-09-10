@@ -12,7 +12,7 @@
         android:layout_weight="0.7"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Meme Name" />
+        android:hint="Meme Name" />
 
     <EditText
         android:id="@+id/propose_ticker"
@@ -22,7 +22,7 @@
         android:layout_weight="0.7"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Meme Ticker Symbol" />
+        android:hint="Meme Ticker Symbol" />
 
     <EditText
         android:id="@+id/propose_description"
@@ -33,7 +33,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:ems="10"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:hint="Description of the meme"/>
 
     <Button
         android:layout_width="match_parent"
@@ -43,5 +44,5 @@
         android:background="@color/colorAccent"
         android:text="Submit"
         android:textSize="30dp"
-        android:onClick="submitMeme"/>
+        android:id="@+id/submit_meme"/>
 </LinearLayout>
