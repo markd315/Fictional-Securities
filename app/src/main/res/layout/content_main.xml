@@ -19,5 +19,10 @@
 
     </FrameLayout>
 
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:onClick="testPage"/>
+
 
 </android.support.constraint.ConstraintLayout>

@@ -1,9 +1,13 @@
 package com.yzhao12.fictionalassets;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,6 +15,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -42,6 +48,7 @@ public class HomepageActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -107,6 +114,21 @@ public class HomepageActivity extends AppCompatActivity
         m_auth = FirebaseAuth.getInstance();
         m_database = FirebaseDatabase.getInstance();
     }
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.search_button, menu);
+//
+//        // Get the SearchView and set the searchable configuration
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+//        // Assumes current activity is the searchable activity
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName("com.yzhao12.fictionalassets", "SearchActivity.class")));
+//        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+//
+//        return true;
+//    }
 
     @Override
     public void onPause() {
@@ -163,8 +185,8 @@ public class HomepageActivity extends AppCompatActivity
     }
 
 
-    public void testMemepage(View view) {
-        startActivity(new Intent(this, MemeActivity.class));
+    public void testPage(View view) {
+        startActivity(new Intent(this, SearchActivity.class));
     }
 
 
