@@ -17,6 +17,8 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.search_bar);
+        setSupportActionBar(toolbar);
     }
 
 
@@ -24,7 +26,7 @@ public class SearchActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_button, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
 
