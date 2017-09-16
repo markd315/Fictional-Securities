@@ -36,7 +36,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.yzhao12.fictionalassets.HomepageActivity" />
         </activity>
-        <activity android:name=".SearchActivity">
+        <activity android:name=".SearchActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>

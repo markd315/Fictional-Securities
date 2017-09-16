@@ -31,42 +31,12 @@ public class SearchActivity extends AppCompatActivity {
         //Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
         // Assumes current activity is the searchable activity
+        Log.wtf("zhao:", Boolean.toString(searchManager.getSearchableInfo(SearchActivity.this.getComponentName()) == null));
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
         return super.onCreateOptionsMenu(menu);
     }
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_search:
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the options menu from XML
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.search_button, menu);
-//
-//        // Get the SearchView and set the searchable configuration
-//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-//        // Assumes current activity is the searchable activity
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-//        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
-//
-//        return true;
-//    }
 }
