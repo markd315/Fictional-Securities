@@ -1,8 +1,8 @@
 package com.yzhao12.fictionalassets;
 
-import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -20,8 +19,12 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.search_bar);
         setSupportActionBar(toolbar);
-    }
 
+        Intent intent = getIntent();
+        if (intent != null && Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -39,4 +42,6 @@ public class SearchActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+
+
 }
