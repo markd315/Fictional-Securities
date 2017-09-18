@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -48,6 +50,11 @@ public class MemeActivity extends AppCompatActivity {
 
     DatabaseReference currentMemeRef;
     Meme currentMeme;
+    TextView ticker;
+    TextView name;
+    TextView price;
+    ImageButton buy;
+    ImageButton sell;
 
 
 }
