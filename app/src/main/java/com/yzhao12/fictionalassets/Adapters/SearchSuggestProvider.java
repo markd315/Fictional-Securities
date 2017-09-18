@@ -47,12 +47,14 @@ public class SearchSuggestProvider extends ContentProvider {
         MatrixCursor result = new MatrixCursor(columns);
 
         for(Meme suggestion: suggestions) {
-            if(suggestion.getTicker().length() >= ) {
-
+            if(suggestion.getTicker().length() >= selectionArgs[0].length() &&
+                    suggestion.getTicker().substring(0, selectionArgs[0].length()).equals(selectionArgs[0])) {
+                String[] row = {Integer.toString(suggestion.getTicker().hashCode()), suggestion.getTicker(), suggestion.getName(), suggestion.getTicker()};
+                result.addRow(row);
             }
         }
 
-        return null;
+        return result;
     }
 
     @Override
