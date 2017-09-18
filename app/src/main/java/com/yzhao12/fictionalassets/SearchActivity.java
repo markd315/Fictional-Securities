@@ -23,6 +23,11 @@ public class SearchActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
+        } else if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
+            String ticker = intent.getDataString();
+            Intent openMeme = new Intent(this.getApplicationContext(), MemeActivity.class);
+            openMeme.putExtra("ticker", ticker);
+            startActivity(openMeme);
         }
     }
 
