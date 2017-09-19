@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -19,14 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name" />
+
         <activity
             android:name=".HomepageActivity"
             android:label="@string/title_activity_homepage"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme" />
+
         <activity
             android:name=".MemeActivity"
             android:label="@string/title_activity_meme"
@@ -36,6 +40,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.yzhao12.fictionalassets.HomepageActivity" />
         </activity>
+
         <activity android:name=".SearchActivity"
             android:launchMode="singleTop">
             <intent-filter>
@@ -44,6 +49,9 @@
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
         </activity>
+
+        <provider android:authorities="com.yzhao12.fictionalassets.Adapters.SearchSuggestProvider"
+            android:name="com.yzhao12.fictionalassets.Adapters.SearchSuggestProvider"/>
     </application>
 
 </manifest>

@@ -21,10 +21,12 @@ public class SearchActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
+        Log.wtf("zhao", Intent.ACTION_VIEW);
         if (intent != null && Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
         } else if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
             String ticker = intent.getDataString();
+            Log.wtf("zhao", ticker);
             Intent openMeme = new Intent(this.getApplicationContext(), MemeActivity.class);
             openMeme.putExtra("ticker", ticker);
             startActivity(openMeme);
@@ -44,6 +46,13 @@ public class SearchActivity extends AppCompatActivity {
         Log.wtf("zhao:", Boolean.toString(searchManager.getSearchableInfo(SearchActivity.this.getComponentName()) == null));
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+        // Theme the SearchView's AutoCompleteTextView drop down. For some reason this wasn't working in styles.xml
+        SearchView.SearchAutoComplete autoCompleteTextView = (SearchView.SearchAutoComplete) searchView.findViewById(R.id.search_src_text);
+
+        if (autoCompleteTextView != null) {
+            autoCompleteTextView.setDropDownBackgroundResource(R.color.black);
+        }
 
         return super.onCreateOptionsMenu(menu);
     }
