@@ -11,14 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <TextView
             android:id="@+id/meme_ticker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="PEPE"
             android:textSize="30dp"/>
 
         <TextView
@@ -27,8 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/meme_ticker"
             android:layout_centerHorizontal="true"
-            android:textSize="15dp"
-            android:text="The meme with the sad frog in various forms" />
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/meme_price"
@@ -36,8 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/meme_name"
             android:layout_centerHorizontal="true"
-            android:textSize="25dp"
-            android:text="123.45" />
+            android:textSize="25dp" />
 
         <com.robinhood.spark.SparkView
             android:id="@+id/portfolio_sparkline"

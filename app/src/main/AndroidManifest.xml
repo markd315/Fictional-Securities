@@ -49,8 +49,8 @@
                 android:resource="@xml/searchable"/>
         </activity>
 
-        <provider android:authorities="com.yzhao12.fictionalassets.SearchSuggestProvider"
-            android:name="com.yzhao12.fictionalassets.SearchSuggestProvider"/>
+        <provider android:authorities="com.yzhao12.fictionalassets.Adapters.SearchSuggestProvider"
+            android:name="com.yzhao12.fictionalassets.Adapters.SearchSuggestProvider"/>
     </application>
 
 </manifest>

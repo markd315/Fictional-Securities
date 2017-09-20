@@ -67,7 +67,7 @@ public class ProposePageFrag extends Fragment {
         String name = nameView.getText().toString();
         String ticker = tickerView.getText().toString();
         String description = descriptionView.getText().toString();
-        Meme proposal = new Meme(name, ticker, description, null, null);
+        ProposedMeme proposal = new ProposedMeme(name, ticker, description, 0);
 
         memes.child(ticker).setValue(proposal);
     }

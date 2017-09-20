@@ -10,7 +10,7 @@ public class ProposedMeme extends Meme {
     }
 
     public ProposedMeme(String name, String ticker, String description, int shares) {
-        super(name, ticker, description, null, null);
+        super(name, ticker, description, "10", null, null);
         sharesSold = shares;
     }
 

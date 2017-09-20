@@ -11,10 +11,11 @@ public class Meme {
 
     }
 
-    public Meme(String name, String ticker, String description, ArrayList<Transaction> buy, ArrayList<Transaction> sell) {
+    public Meme(String name, String ticker, String description, String price, ArrayList<Transaction> buy, ArrayList<Transaction> sell) {
         m_name = name;
         m_ticker = ticker;
         m_description = description;
+        m_price = price;
         m_buy = buy;
         m_sell = sell;
     }
@@ -43,6 +44,14 @@ public class Meme {
         m_description = description;
     }
 
+    public String getPrice() {
+        return m_price;
+    }
+
+    public void setPrice(String price) {
+        m_price = price;
+    }
+
     public ArrayList<Transaction> getBuy() {
         return m_buy;
     }
@@ -62,6 +71,7 @@ public class Meme {
     private String m_name;
     private String m_ticker;
     private String m_description;
+    private String m_price;
 
     private ArrayList<Transaction> m_buy;
     private ArrayList<Transaction> m_sell;

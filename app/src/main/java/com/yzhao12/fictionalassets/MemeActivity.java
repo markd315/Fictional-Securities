@@ -30,13 +30,27 @@ public class MemeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        ticker = (TextView)findViewById(R.id.meme_ticker);
+        name = (TextView)findViewById(R.id.meme_name);
+        price = (TextView)findViewById(R.id.meme_price);
+        buy = (ImageButton) findViewById(R.id.meme_buy);
+        sell = (ImageButton) findViewById(R.id.meme_sell);
+
+
         Intent fromSuggestions = getIntent();
+        //Log.wtf("zhao: MemeActivity getting the ticker ", fromSuggestions.getStringExtra("ticker"));
         currentMemeRef = FirebaseDatabase.getInstance().getReference().child("Memes").child(fromSuggestions.getStringExtra("ticker"));
 
         currentMemeRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.wtf("zhao: hit", "HIT");
                 currentMeme = dataSnapshot.getValue(Meme.class);
+
+                ticker.setText(currentMeme.getTicker());
+                name.setText(currentMeme.getName());
+                Log.wtf("zhao: PRICE ", Boolean.toString(currentMeme == null));
+                price.setText(currentMeme.getPrice());
             }
 
             @Override
@@ -44,6 +58,9 @@ public class MemeActivity extends AppCompatActivity {
                 Log.wtf("zhao:", "MemeActivity's currentMemeRef listener cancelled");
             }
         });
+
+
+
 
     }
 

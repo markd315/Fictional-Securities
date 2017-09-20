@@ -46,9 +46,6 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
-
-
-
         // Theme the SearchView's AutoCompleteTextView drop down. For some reason this wasn't working in styles.xml
         SearchView.SearchAutoComplete autoCompleteTextView = (SearchView.SearchAutoComplete) searchView.findViewById(R.id.search_src_text);
 
