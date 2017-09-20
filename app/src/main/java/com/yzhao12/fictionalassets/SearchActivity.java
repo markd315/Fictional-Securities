@@ -20,8 +20,8 @@ public class SearchActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.search_bar);
         setSupportActionBar(toolbar);
 
+        Log.wtf("zhao", "SearchActivity");
         Intent intent = getIntent();
-        Log.wtf("zhao", Intent.ACTION_VIEW);
         if (intent != null && Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
         } else if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
@@ -43,9 +43,11 @@ public class SearchActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         // Assumes current activity is the searchable activity
-        Log.wtf("zhao:", Boolean.toString(searchManager.getSearchableInfo(SearchActivity.this.getComponentName()) == null));
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+
+
 
         // Theme the SearchView's AutoCompleteTextView drop down. For some reason this wasn't working in styles.xml
         SearchView.SearchAutoComplete autoCompleteTextView = (SearchView.SearchAutoComplete) searchView.findViewById(R.id.search_src_text);

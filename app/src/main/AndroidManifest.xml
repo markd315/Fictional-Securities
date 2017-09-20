@@ -41,8 +41,7 @@
                 android:value="com.yzhao12.fictionalassets.HomepageActivity" />
         </activity>
 
-        <activity android:name=".SearchActivity"
-            android:launchMode="singleTop">
+        <activity android:name=".SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -50,8 +49,8 @@
                 android:resource="@xml/searchable"/>
         </activity>
 
-        <provider android:authorities="com.yzhao12.fictionalassets.Adapters.SearchSuggestProvider"
-            android:name="com.yzhao12.fictionalassets.Adapters.SearchSuggestProvider"/>
+        <provider android:authorities="com.yzhao12.fictionalassets.SearchSuggestProvider"
+            android:name="com.yzhao12.fictionalassets.SearchSuggestProvider"/>
     </application>
 
 </manifest>
