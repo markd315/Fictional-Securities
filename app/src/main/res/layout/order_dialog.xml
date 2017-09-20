@@ -8,7 +8,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_margin="10dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:checkedButton="@+id/order_buy">
 
         <RadioButton
             android:id="@+id/order_buy"

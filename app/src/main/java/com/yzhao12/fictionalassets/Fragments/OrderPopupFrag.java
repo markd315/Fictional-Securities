@@ -6,7 +6,12 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.widget.Toast;
 
+import com.yzhao12.fictionalassets.HomepageActivity;
+import com.yzhao12.fictionalassets.MainActivity;
+import com.yzhao12.fictionalassets.MemeActivity;
 import com.yzhao12.fictionalassets.R;
 
 /**
@@ -16,20 +21,18 @@ import com.yzhao12.fictionalassets.R;
 public class OrderPopupFrag extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("FIRE MISSLES?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Log.wtf("zhao:", "YES");
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Log.wtf("zhao:", "No");
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        builder.setView(inflater.inflate(R.layout.order_dialog, null))
+                .setNeutralButton("Place Order", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity(), "ORDER PLACED", Toast.LENGTH_LONG).show();
                     }
                 });
-        // Create the AlertDialog object and return it
-        return builder.create();
+
+        AlertDialog orderPopup = builder.create();
+        return orderPopup;
     }
 }
