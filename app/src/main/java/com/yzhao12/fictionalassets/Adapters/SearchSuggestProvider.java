@@ -59,7 +59,7 @@ public class SearchSuggestProvider extends ContentProvider {
 
         for(Meme suggestion: suggestions) {
             if(suggestion.getTicker().length() >= selectionArgs[0].length() &&
-                    suggestion.getTicker().substring(0, selectionArgs[0].length()).equals(selectionArgs[0])) {
+                    suggestion.getTicker().substring(0, selectionArgs[0].length()).equals(selectionArgs[0].toUpperCase())) {
                 String[] row = {Integer.toString(id), suggestion.getTicker(), suggestion.getName(), suggestion.getTicker()};
                 id++;
                 Log.wtf("zhao", Arrays.toString(row));

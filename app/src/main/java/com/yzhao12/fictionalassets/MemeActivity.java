@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.yzhao12.fictionalassets.DataObjects.Meme;
+import com.yzhao12.fictionalassets.Fragments.OrderPopupFrag;
 
 public class MemeActivity extends AppCompatActivity {
 
@@ -33,8 +35,8 @@ public class MemeActivity extends AppCompatActivity {
         ticker = (TextView)findViewById(R.id.meme_ticker);
         name = (TextView)findViewById(R.id.meme_name);
         price = (TextView)findViewById(R.id.meme_price);
-        buy = (ImageButton) findViewById(R.id.meme_buy);
-        sell = (ImageButton) findViewById(R.id.meme_sell);
+        order = (ImageButton) findViewById(R.id.meme_order);
+
 
 
         Intent fromSuggestions = getIntent();
@@ -58,10 +60,12 @@ public class MemeActivity extends AppCompatActivity {
                 Log.wtf("zhao:", "MemeActivity's currentMemeRef listener cancelled");
             }
         });
+    }
 
-
-
-
+    public void order(View view) {
+        OrderPopupFrag test = new OrderPopupFrag();
+        FragmentManager fragtest = getFragmentManager();
+        test.show(fragtest, "SHOW");
     }
 
 
@@ -70,8 +74,7 @@ public class MemeActivity extends AppCompatActivity {
     TextView ticker;
     TextView name;
     TextView price;
-    ImageButton buy;
-    ImageButton sell;
+    ImageButton order;
 
 
 }

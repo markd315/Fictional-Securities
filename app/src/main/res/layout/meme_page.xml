@@ -45,21 +45,25 @@
             android:layout_below="@id/meme_price"/>
 
         <ImageButton
-            android:id="@+id/meme_buy"
-            android:layout_width="175dp"
-            android:layout_height="75dp"
+            android:id="@+id/meme_order"
+            android:layout_width="match_parent"
+            android:layout_margin="20dp"
+            android:layout_height="100dp"
             android:layout_alignStart="@+id/portfolio_sparkline"
             android:layout_below="@+id/portfolio_sparkline"
             android:layout_marginTop="37dp"
-            app:srcCompat="@drawable/side_nav_bar" />
+            android:background="@color/green"
+            android:onClick="order"/>
 
-        <ImageButton
+<!--        <ImageButton
             android:id="@+id/meme_sell"
             android:layout_width="175dp"
             android:layout_height="75dp"
             android:layout_alignEnd="@+id/portfolio_sparkline"
             android:layout_alignTop="@id/meme_buy"
             app:srcCompat="@drawable/side_nav_bar" />
+
+            -->
 
     </RelativeLayout>
 </ScrollView>
