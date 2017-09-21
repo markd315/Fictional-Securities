@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.yzhao12.fictionalassets.DataObjects.Meme;
 import com.yzhao12.fictionalassets.DataObjects.User;
 import com.yzhao12.fictionalassets.R;
 
@@ -75,17 +77,35 @@ public class OrderPopupFrag extends DialogFragment {
     }
 
     public void loadMemeInfo(String ticker) {
+        DatabaseReference meme = FirebaseDatabase.getInstance().getReference().child("Memes").child(ticker);
+        meme.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                memeInfo = dataSnapshot.getValue(Meme.class);
+                price.setText(memeInfo.getPrice());
+                if(shares.getText().toString() != null) {
+                    sharesOrdered = Integer.getInteger(shares.getText().toString());
+                }
+                total.setText(Integer.toString(sharesOrdered * Integer.getInteger(memeInfo.getPrice())));
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
 
     private DatabaseReference orders;
     private DatabaseReference userInfo;
+    private Meme memeInfo;
     private RadioGroup orderType;
     private TextView money;
     private TextView total;
     private TextView price;
     private EditText shares;
+    private int sharesOrdered = 0;
 
 }
