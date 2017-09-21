@@ -6,8 +6,11 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -30,12 +33,14 @@ import com.yzhao12.fictionalassets.R;
  */
 
 public class OrderPopupFrag extends DialogFragment {
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
+        View view = inflater.inflate(R.layout.order_dialog, null);
 
-        builder.setView(inflater.inflate(R.layout.order_dialog, null))
+        builder.setView(view)
                 .setNeutralButton("Place Order", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -46,11 +51,13 @@ public class OrderPopupFrag extends DialogFragment {
 
         AlertDialog orderPopup = builder.create();
 
-        orderType = (RadioGroup)orderPopup.findViewById(R.id.order_buySell);
-        money = (TextView)orderPopup.findViewById(R.id.order_money);
-        total = (TextView)orderPopup.findViewById(R.id.order_total);
-        price = (TextView)orderPopup.findViewById(R.id.order_price);
-        shares = (EditText)orderPopup.findViewById(R.id.order_shares);
+        orderType = (RadioGroup)view.findViewById(R.id.order_buySell);
+        money = (TextView)view.findViewById(R.id.order_money);
+        total = (TextView)view.findViewById(R.id.order_total);
+        price = (TextView)view.findViewById(R.id.order_price);
+        shares = (EditText)view.findViewById(R.id.order_shares);
+
+
 
         return orderPopup;
     }
@@ -62,18 +69,10 @@ public class OrderPopupFrag extends DialogFragment {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         userInfo = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid());
-        userInfo.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User currentUser = dataSnapshot.getValue(User.class);
-                money.setText("Your Money: " + currentUser.getUserMoney());
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+        Log.wtf("zhao: ORDER", "ONCREATE");
+
     }
 
     public void loadMemeInfo(String ticker) {
@@ -82,11 +81,55 @@ public class OrderPopupFrag extends DialogFragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 memeInfo = dataSnapshot.getValue(Meme.class);
-                price.setText(memeInfo.getPrice());
-                if(shares.getText().toString() != null) {
-                    sharesOrdered = Integer.getInteger(shares.getText().toString());
-                }
-                total.setText(Integer.toString(sharesOrdered * Integer.getInteger(memeInfo.getPrice())));
+                Log.wtf("zhao: ORDER", "LOADMEMEINFO DATA");
+
+
+
+
+                price.setText("Price: " + memeInfo.getPrice());
+
+                shares.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        if(!shares.getText().toString().isEmpty()) {
+                            total.setText("Total: " + Double.toString(Integer.parseInt(s.toString()) * Double.parseDouble(memeInfo.getPrice())));
+                        } else {
+                            total.setText("Total: 0");
+                        }
+                    }
+                });
+
+
+                Log.wtf("zhao: memeinfo", memeInfo.getTicker());
+                total.setText("Total: " + Double.toString(sharesOrdered * Double.parseDouble(memeInfo.getPrice())));
+
+
+
+                userInfo.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User currentUser = dataSnapshot.getValue(User.class);
+                        money.setText("Your Money: " + currentUser.getUserMoney());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+                //Log.wtf("zhao: ORDER", "ONCREATEDIALOG");
+
             }
 
             @Override
@@ -95,7 +138,10 @@ public class OrderPopupFrag extends DialogFragment {
             }
         });
 
+        Log.wtf("zhao: ORDER", "LOADMEMEINFO");
+
     }
+
 
 
     private DatabaseReference orders;

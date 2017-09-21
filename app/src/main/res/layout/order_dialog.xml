@@ -34,7 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Your Money: 123.34"
         android:textSize="20dp"/>
 
     <TextView
@@ -43,7 +42,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Total: 50.00"
         android:textSize="20dp"/>
 
     <TextView
@@ -52,7 +50,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Price: 10.00"
         android:textSize="20dp"/>
 
     <EditText
