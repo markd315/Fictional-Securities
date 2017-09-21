@@ -7,12 +7,21 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.yzhao12.fictionalassets.HomepageActivity;
-import com.yzhao12.fictionalassets.MainActivity;
-import com.yzhao12.fictionalassets.MemeActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.yzhao12.fictionalassets.DataObjects.User;
 import com.yzhao12.fictionalassets.R;
+
 
 /**
  * Created by Yang on 9/20/2017.
@@ -29,10 +38,54 @@ public class OrderPopupFrag extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getActivity(), "ORDER PLACED", Toast.LENGTH_LONG).show();
+
                     }
                 });
 
         AlertDialog orderPopup = builder.create();
+
+        orderType = (RadioGroup)orderPopup.findViewById(R.id.order_buySell);
+        money = (TextView)orderPopup.findViewById(R.id.order_money);
+        total = (TextView)orderPopup.findViewById(R.id.order_total);
+        price = (TextView)orderPopup.findViewById(R.id.order_price);
+        shares = (EditText)orderPopup.findViewById(R.id.order_shares);
+
         return orderPopup;
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        orders = FirebaseDatabase.getInstance().getReference().child("Orders");
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        userInfo = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid());
+        userInfo.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User currentUser = dataSnapshot.getValue(User.class);
+                money.setText("Your Money: " + currentUser.getUserMoney());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void loadMemeInfo(String ticker) {
+
+
+    }
+
+
+    private DatabaseReference orders;
+    private DatabaseReference userInfo;
+    private RadioGroup orderType;
+    private TextView money;
+    private TextView total;
+    private TextView price;
+    private EditText shares;
+
 }

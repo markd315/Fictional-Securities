@@ -6,9 +6,9 @@ import java.sql.Time;
  * Created by Yang on 6/18/2017.
  */
 
-public class Transaction {
+public class Order {
 
-    public Transaction(int shares, float price, Time timestamp, int userid) {
+    public Order(int shares, float price, Time timestamp, int userid) {
         m_shares = shares;
         m_price = price;
         m_timestamp = timestamp;

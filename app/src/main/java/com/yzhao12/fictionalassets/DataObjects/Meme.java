@@ -11,7 +11,7 @@ public class Meme {
 
     }
 
-    public Meme(String name, String ticker, String description, String price, ArrayList<Transaction> buy, ArrayList<Transaction> sell) {
+    public Meme(String name, String ticker, String description, String price, ArrayList<Order> buy, ArrayList<Order> sell) {
         m_name = name;
         m_ticker = ticker;
         m_description = description;
@@ -52,19 +52,19 @@ public class Meme {
         m_price = price;
     }
 
-    public ArrayList<Transaction> getBuy() {
+    public ArrayList<Order> getBuy() {
         return m_buy;
     }
 
-    public void setBuy(ArrayList<Transaction> buy) {
+    public void setBuy(ArrayList<Order> buy) {
         m_buy = buy;
     }
 
-    public ArrayList<Transaction> getSell() {
+    public ArrayList<Order> getSell() {
         return m_sell;
     }
 
-    public void setSell(ArrayList<Transaction> sell) {
+    public void setSell(ArrayList<Order> sell) {
         m_sell = sell;
     }
 
@@ -73,6 +73,6 @@ public class Meme {
     private String m_description;
     private String m_price;
 
-    private ArrayList<Transaction> m_buy;
-    private ArrayList<Transaction> m_sell;
+    private ArrayList<Order> m_buy;
+    private ArrayList<Order> m_sell;
 }

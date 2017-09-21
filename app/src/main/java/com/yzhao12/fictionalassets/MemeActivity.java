@@ -63,9 +63,10 @@ public class MemeActivity extends AppCompatActivity {
     }
 
     public void order(View view) {
-        OrderPopupFrag test = new OrderPopupFrag();
-        FragmentManager fragtest = getFragmentManager();
-        test.show(fragtest, "SHOW");
+        OrderPopupFrag orderPopup = new OrderPopupFrag();
+        FragmentManager fragmentManager = getFragmentManager();
+        orderPopup.show(fragmentManager, "Order");
+        orderPopup.loadMemeInfo(currentMeme.getTicker());
     }
 
 
