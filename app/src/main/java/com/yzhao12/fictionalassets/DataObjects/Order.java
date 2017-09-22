@@ -7,6 +7,9 @@ import java.sql.Time;
  */
 
 public class Order {
+    public Order() {
+
+    }
 
     public Order(int shares, float price, /*Time timestamp,*/ String userid) {
         m_shares = shares;

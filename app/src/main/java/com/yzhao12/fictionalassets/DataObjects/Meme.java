@@ -11,13 +11,11 @@ public class Meme {
 
     }
 
-    public Meme(String name, String ticker, String description, String price/*, ArrayList<Order> buy, ArrayList<Order> sell*/) {
+    public Meme(String name, String ticker, String description, String price) {
         m_name = name;
         m_ticker = ticker;
         m_description = description;
         m_price = price;
-        m_buy = new ArrayList<Order>();
-        m_sell = new ArrayList<Order>();
     }
 
     public String getName() {
@@ -52,27 +50,8 @@ public class Meme {
         m_price = price;
     }
 
-    public ArrayList<Order> getBuy() {
-        return m_buy;
-    }
-
-    public void setBuy(ArrayList<Order> buy) {
-        m_buy = buy;
-    }
-
-    public ArrayList<Order> getSell() {
-        return m_sell;
-    }
-
-    public void setSell(ArrayList<Order> sell) {
-        m_sell = sell;
-    }
-
     private String m_name;
     private String m_ticker;
     private String m_description;
     private String m_price;
-
-    private ArrayList<Order> m_buy;
-    private ArrayList<Order> m_sell;
 }

@@ -25,8 +25,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.yzhao12.fictionalassets.DataObjects.Meme;
 import com.yzhao12.fictionalassets.DataObjects.Order;
+import com.yzhao12.fictionalassets.DataObjects.OrderMeme;
 import com.yzhao12.fictionalassets.DataObjects.User;
 import com.yzhao12.fictionalassets.R;
+
+import java.util.ArrayList;
 
 
 /**
@@ -52,13 +55,26 @@ public class OrderPopupFrag extends DialogFragment {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 memeInfo = dataSnapshot.getValue(Meme.class);
-                                Order order = new Order(sharesOrdered, Float.parseFloat(memeInfo.getPrice()), FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                if(orderType.getCheckedRadioButtonId() == R.id.order_buy) {
-                                    memeInfo.getBuy().add(order);
-                                } else if(orderType.getCheckedRadioButtonId() == R.id.order_sell) {
-                                    memeInfo.getSell().add(order);
-                                }
-                                orders.child(ticker).setValue(memeInfo);
+                                final Order order = new Order(sharesOrdered, Float.parseFloat(memeInfo.getPrice()), FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                orders.child(ticker).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        OrderMeme orderMeme = dataSnapshot.getValue(OrderMeme.class);
+                                        if(orderType.getCheckedRadioButtonId() == R.id.order_buy) {
+                                            ArrayList<Order> test = new ArrayList<Order>();
+                                            test.add(order);
+                                            orderMeme.setBuy(test);
+                                        } else if(orderType.getCheckedRadioButtonId() == R.id.order_sell) {
+                                            orderMeme.getSell().add(order);
+                                        }
+                                        orders.child(ticker).setValue(orderMeme);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
                             }
 
                             @Override
@@ -66,10 +82,6 @@ public class OrderPopupFrag extends DialogFragment {
 
                             }
                         });
-
-
-
-
                     }
                 });
 
@@ -119,8 +131,10 @@ public class OrderPopupFrag extends DialogFragment {
                     @Override
                     public void afterTextChanged(Editable s) {
                         if(!shares.getText().toString().isEmpty()) {
+                            sharesOrdered = Integer.parseInt(s.toString());
                             total.setText("Total: " + Double.toString(Integer.parseInt(s.toString()) * Double.parseDouble(memeInfo.getPrice())));
                         } else {
+                            sharesOrdered = 0;
                             total.setText("Total: 0");
                         }
                     }

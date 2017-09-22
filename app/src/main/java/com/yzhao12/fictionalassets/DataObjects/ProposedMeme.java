@@ -6,7 +6,7 @@ package com.yzhao12.fictionalassets.DataObjects;
 
 public class ProposedMeme extends Meme {
     public ProposedMeme() {
-
+        super(null, null, null, null);
     }
 
     public ProposedMeme(String name, String ticker, String description, int shares) {
