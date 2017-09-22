@@ -11,13 +11,13 @@ public class Meme {
 
     }
 
-    public Meme(String name, String ticker, String description, String price, ArrayList<Order> buy, ArrayList<Order> sell) {
+    public Meme(String name, String ticker, String description, String price/*, ArrayList<Order> buy, ArrayList<Order> sell*/) {
         m_name = name;
         m_ticker = ticker;
         m_description = description;
         m_price = price;
-        m_buy = buy;
-        m_sell = sell;
+        m_buy = new ArrayList<Order>();
+        m_sell = new ArrayList<Order>();
     }
 
     public String getName() {

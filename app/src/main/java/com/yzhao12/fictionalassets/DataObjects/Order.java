@@ -8,10 +8,10 @@ import java.sql.Time;
 
 public class Order {
 
-    public Order(int shares, float price, Time timestamp, int userid) {
+    public Order(int shares, float price, /*Time timestamp,*/ String userid) {
         m_shares = shares;
         m_price = price;
-        m_timestamp = timestamp;
+        //m_timestamp = timestamp;
         m_userid = userid;
     }
 
@@ -39,11 +39,11 @@ public class Order {
         m_timestamp = timestamp;
     }
 
-    public int getUserid() {
+    public String getUserid() {
         return m_userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(String userid) {
         m_userid = userid;
     }
 
@@ -51,5 +51,5 @@ public class Order {
     private int m_shares;
     private float m_price;
     private Time m_timestamp;
-    private int m_userid;
+    private String m_userid;
 }

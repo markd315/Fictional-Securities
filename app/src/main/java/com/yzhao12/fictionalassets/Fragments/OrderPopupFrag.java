@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.yzhao12.fictionalassets.DataObjects.Meme;
+import com.yzhao12.fictionalassets.DataObjects.Order;
 import com.yzhao12.fictionalassets.DataObjects.User;
 import com.yzhao12.fictionalassets.R;
 
@@ -46,6 +47,29 @@ public class OrderPopupFrag extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getActivity(), "ORDER PLACED", Toast.LENGTH_LONG).show();
 
+                        meme = FirebaseDatabase.getInstance().getReference().child("Memes").child(ticker);
+                        meme.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                memeInfo = dataSnapshot.getValue(Meme.class);
+                                Order order = new Order(sharesOrdered, Float.parseFloat(memeInfo.getPrice()), FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                if(orderType.getCheckedRadioButtonId() == R.id.order_buy) {
+                                    memeInfo.getBuy().add(order);
+                                } else if(orderType.getCheckedRadioButtonId() == R.id.order_sell) {
+                                    memeInfo.getSell().add(order);
+                                }
+                                orders.child(ticker).setValue(memeInfo);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+
+
                     }
                 });
 
@@ -56,8 +80,6 @@ public class OrderPopupFrag extends DialogFragment {
         total = (TextView)view.findViewById(R.id.order_total);
         price = (TextView)view.findViewById(R.id.order_price);
         shares = (EditText)view.findViewById(R.id.order_shares);
-
-
 
         return orderPopup;
     }
@@ -70,19 +92,15 @@ public class OrderPopupFrag extends DialogFragment {
 
         userInfo = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid());
 
-
-        Log.wtf("zhao: ORDER", "ONCREATE");
-
     }
 
     public void loadMemeInfo(String ticker) {
-        DatabaseReference meme = FirebaseDatabase.getInstance().getReference().child("Memes").child(ticker);
+        this.ticker = ticker;
+        meme = FirebaseDatabase.getInstance().getReference().child("Memes").child(ticker);
         meme.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 memeInfo = dataSnapshot.getValue(Meme.class);
-                Log.wtf("zhao: ORDER", "LOADMEMEINFO DATA");
-
 
 
 
@@ -126,10 +144,6 @@ public class OrderPopupFrag extends DialogFragment {
 
                     }
                 });
-
-
-                //Log.wtf("zhao: ORDER", "ONCREATEDIALOG");
-
             }
 
             @Override
@@ -146,8 +160,12 @@ public class OrderPopupFrag extends DialogFragment {
 
     private DatabaseReference orders;
     private DatabaseReference userInfo;
+    private DatabaseReference meme;
     private Meme memeInfo;
     private RadioGroup orderType;
+    private String ticker;
+
+
     private TextView money;
     private TextView total;
     private TextView price;
