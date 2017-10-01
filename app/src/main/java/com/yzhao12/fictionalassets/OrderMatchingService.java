@@ -10,10 +10,18 @@ import android.os.Message;
 import android.os.Process;
 import android.widget.Toast;
 
-public class OrderMatchingService extends Service {
-    private Looper mServiceLooper;
-    private ServiceHandler mServiceHandler;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.yzhao12.fictionalassets.DataObjects.Order;
+import com.yzhao12.fictionalassets.DataObjects.OrderMeme;
 
+import java.util.ArrayList;
+
+
+public class OrderMatchingService extends Service {
     // Handler that receives messages from the thread
     private final class ServiceHandler extends Handler {
         public ServiceHandler(Looper looper) {
@@ -31,7 +39,6 @@ public class OrderMatchingService extends Service {
             }
             // Stop the service using the startId, so that we don't stop
             // the service in the middle of handling another job
-            stopSelf(msg.arg1);
         }
     }
 
@@ -47,6 +54,36 @@ public class OrderMatchingService extends Service {
         // Get the HandlerThread's Looper and use it for our Handler
         mServiceLooper = thread.getLooper();
         mServiceHandler = new ServiceHandler(mServiceLooper);
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        trackedTickers = new ArrayList<>();
+        orderBookChecker = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Order> buys = dataSnapshot.getValue(OrderMeme.class).getBuy();
+                ArrayList<Order> sells = dataSnapshot.getValue(OrderMeme.class).getSell();
+
+                int i = 0;
+                int j = 0;
+                for( ; i < buys.size() && j < sells.size(); i++, j++) {
+                    if((buys.get(i).getUserid() == currentUser.getUid() || sells.get(i).getUserid() == currentUser.getUid()) &&
+                            buys.get(i) == sells.get(j)) {
+
+                        Toast.makeText(OrderMatchingService.this, "MATCHED AN ORDER, SHARES: " + buys.get(i).getShares(), Toast.LENGTH_SHORT).show();
+                        buys.remove(i);
+                        sells.remove(j);
+                        i--;
+                        j--;
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
     }
 
     @Override
@@ -73,4 +110,13 @@ public class OrderMatchingService extends Service {
     public void onDestroy() {
         Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
     }
+
+
+
+    private Looper mServiceLooper;
+    private ServiceHandler mServiceHandler;
+
+    private FirebaseUser currentUser;
+    private ArrayList<String> trackedTickers;
+    private ValueEventListener orderBookChecker;
 }
