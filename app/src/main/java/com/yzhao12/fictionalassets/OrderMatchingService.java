@@ -27,18 +27,10 @@ public class OrderMatchingService extends Service {
         public ServiceHandler(Looper looper) {
             super(looper);
         }
+
         @Override
         public void handleMessage(Message msg) {
-            // Normally we would do some work here, like download a file.
-            // For our sample, we just sleep for 5 seconds.
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                // Restore interrupt status.
-                Thread.currentThread().interrupt();
-            }
-            // Stop the service using the startId, so that we don't stop
-            // the service in the middle of handling another job
+            Intent intent = (Intent)msg.obj;
         }
     }
 
@@ -94,6 +86,7 @@ public class OrderMatchingService extends Service {
         // start ID so we know which request we're stopping when we finish the job
         Message msg = mServiceHandler.obtainMessage();
         msg.arg1 = startId;
+        msg.obj = intent;
         mServiceHandler.sendMessage(msg);
 
         // If we get killed, after returning from here, restart
