@@ -8,12 +8,15 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Process;
+import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.yzhao12.fictionalassets.DataObjects.Order;
 import com.yzhao12.fictionalassets.DataObjects.OrderMeme;
@@ -30,10 +33,35 @@ public class OrderMatchingService extends Service {
 
         @Override
         public void handleMessage(Message msg) {
-            Intent intent = (Intent)msg.obj;
-
+            final Intent intent = (Intent)msg.obj;
             Order order = new Order(intent.getIntExtra("shares", -1), intent.getFloatExtra("price", -1), intent.getStringExtra("userid"));
+            String ticker = intent.getStringExtra("ticker");
 
+            DatabaseReference orderBook = FirebaseDatabase.getInstance().getReference().child("Orders").child(ticker);
+            if(!trackedTickers.contains(intent.getStringExtra("ticker"))) {
+                orderBook.addValueEventListener(orderBookChecker);
+                trackedTickers.add(orderBook);
+            }
+
+            orderBook.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    OrderMeme memeOrderBook = dataSnapshot.getValue(OrderMeme.class);
+                    if(intent.getIntExtra("type", -1) == R.id.order_buy) {
+                        ArrayList<Order> buys = memeOrderBook.getBuy();
+                        for(int i = buys.size() - 1; i >= 0; i--) {
+
+                        }
+                    } else if(intent.getIntExtra("type", -1) == R.id.order_sell) {
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }
     }
 
@@ -113,6 +141,6 @@ public class OrderMatchingService extends Service {
     private ServiceHandler mServiceHandler;
 
     private FirebaseUser currentUser;
-    private ArrayList<String> trackedTickers;
     private ValueEventListener orderBookChecker;
+    private ArrayList<DatabaseReference> trackedTickers;
 }

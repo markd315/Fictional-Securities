@@ -55,6 +55,8 @@ public class OrderPopupFrag extends DialogFragment {
                         sendOrder.putExtra("shares", sharesOrdered);
                         sendOrder.putExtra("price", Float.parseFloat(memeInfo.getPrice()));
                         sendOrder.putExtra("userid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        sendOrder.putExtra("ticker", ticker);
+                        sendOrder.putExtra("type", orderType.getCheckedRadioButtonId());
                         getActivity().startService(sendOrder);
 
 //                        meme = FirebaseDatabase.getInstance().getReference().child("Memes").child(ticker);
