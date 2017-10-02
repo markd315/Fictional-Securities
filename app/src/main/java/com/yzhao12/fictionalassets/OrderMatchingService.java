@@ -34,7 +34,7 @@ public class OrderMatchingService extends Service {
         @Override
         public void handleMessage(Message msg) {
             final Intent intent = (Intent)msg.obj;
-            Order order = new Order(intent.getIntExtra("shares", -1), intent.getFloatExtra("price", -1), intent.getStringExtra("userid"));
+            final Order order = new Order(intent.getIntExtra("shares", -1), intent.getFloatExtra("price", -1), intent.getStringExtra("userid"));
             String ticker = intent.getStringExtra("ticker");
 
             DatabaseReference orderBook = FirebaseDatabase.getInstance().getReference().child("Orders").child(ticker);
@@ -50,10 +50,31 @@ public class OrderMatchingService extends Service {
                     if(intent.getIntExtra("type", -1) == R.id.order_buy) {
                         ArrayList<Order> buys = memeOrderBook.getBuy();
                         for(int i = buys.size() - 1; i >= 0; i--) {
-
+                            if(buys.get(i).getPrice() >= intent.getFloatExtra("price", -1)) {
+                                if(i == buys.size() - 1) {
+                                    buys.add(order);
+                                    return;
+                                } else {
+                                    buys.add(i - 1, order);
+                                    return;
+                                }
+                            }
                         }
+                        buys.add(0, order);
                     } else if(intent.getIntExtra("type", -1) == R.id.order_sell) {
-
+                        ArrayList<Order> sells = memeOrderBook.getSell();
+                        for(int i = sells.size() - 1; i >= 0; i--) {
+                            if(sells.get(i).getPrice() <= intent.getFloatExtra("price", -1)) {
+                                if(i == sells.size() - 1) {
+                                    sells.add(order);
+                                    return;
+                                } else {
+                                    sells.add(i - 1, order);
+                                    return;
+                                }
+                            }
+                        }
+                        sells.add(0, order);
                     }
                 }
 
