@@ -27,6 +27,7 @@ import com.yzhao12.fictionalassets.DataObjects.Meme;
 import com.yzhao12.fictionalassets.DataObjects.Order;
 import com.yzhao12.fictionalassets.DataObjects.OrderMeme;
 import com.yzhao12.fictionalassets.DataObjects.User;
+import com.yzhao12.fictionalassets.OrderMatchingService;
 import com.yzhao12.fictionalassets.R;
 
 import java.util.ArrayList;
@@ -50,8 +51,11 @@ public class OrderPopupFrag extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getActivity(), "ORDER PLACED", Toast.LENGTH_LONG).show();
 
-
-
+                        Intent sendOrder = new Intent(getActivity(), OrderMatchingService.class);
+                        sendOrder.putExtra("shares", sharesOrdered);
+                        sendOrder.putExtra("price", Float.parseFloat(memeInfo.getPrice()));
+                        sendOrder.putExtra("userid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        getActivity().startService(sendOrder);
 
 //                        meme = FirebaseDatabase.getInstance().getReference().child("Memes").child(ticker);
 //                        meme.addValueEventListener(new ValueEventListener() {

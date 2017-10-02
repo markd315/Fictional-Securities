@@ -34,13 +34,13 @@ public class Order {
         m_price = price;
     }
 
-    public Time getTimestamp() {
-        return m_timestamp;
-    }
-
-    public void setTimestamp(Time timestamp) {
-        m_timestamp = timestamp;
-    }
+//    public Time getTimestamp() {
+//        return m_timestamp;
+//    }
+//
+//    public void setTimestamp(Time timestamp) {
+//        m_timestamp = timestamp;
+//    }
 
     public String getUserid() {
         return m_userid;
@@ -53,6 +53,6 @@ public class Order {
 
     private int m_shares;
     private float m_price;
-    private Time m_timestamp;
+//    private Time m_timestamp;
     private String m_userid;
 }

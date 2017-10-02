@@ -31,6 +31,9 @@ public class OrderMatchingService extends Service {
         @Override
         public void handleMessage(Message msg) {
             Intent intent = (Intent)msg.obj;
+
+            Order order = new Order(intent.getIntExtra("shares", -1), intent.getFloatExtra("price", -1), intent.getStringExtra("userid"));
+
         }
     }
 
