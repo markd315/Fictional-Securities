@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Process;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -116,6 +117,10 @@ public class OrderMatchingService extends Service {
         orderBookChecker = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Log.wtf("zhao:", "WHAT THE FUCK THIS SHOULD FIRE");
+
+
                 ArrayList<Order> buys = dataSnapshot.getValue(OrderMeme.class).getBuy();
                 ArrayList<Order> sells = dataSnapshot.getValue(OrderMeme.class).getSell();
 
@@ -123,7 +128,7 @@ public class OrderMatchingService extends Service {
                 int j = 0;
                 for( ; i < buys.size() && j < sells.size(); i++, j++) {
                     if((buys.get(i).getUserid() == currentUser.getUid() || sells.get(i).getUserid() == currentUser.getUid()) &&
-                            buys.get(i) == sells.get(j)) {
+                            buys.get(i).getPrice() >= sells.get(j).getPrice()) {
 
                         Toast.makeText(OrderMatchingService.this, "MATCHED AN ORDER, SHARES: " + buys.get(i).getShares(), Toast.LENGTH_SHORT).show();
                         buys.remove(i);
