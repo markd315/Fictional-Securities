@@ -44,12 +44,14 @@
         android:layout_weight="1"
         android:textSize="20dp"/>
 
-    <TextView
+    <EditText
         android:id="@+id/order_price"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:inputType="number"
+        android:hint="Price per share..."
         android:textSize="20dp"/>
 
     <EditText

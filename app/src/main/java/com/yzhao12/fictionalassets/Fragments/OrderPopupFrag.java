@@ -100,7 +100,7 @@ public class OrderPopupFrag extends DialogFragment {
         orderType = (RadioGroup)view.findViewById(R.id.order_buySell);
         money = (TextView)view.findViewById(R.id.order_money);
         total = (TextView)view.findViewById(R.id.order_total);
-        price = (TextView)view.findViewById(R.id.order_price);
+        price = (EditText) view.findViewById(R.id.order_price);
         shares = (EditText)view.findViewById(R.id.order_shares);
 
         return orderPopup;
@@ -124,14 +124,34 @@ public class OrderPopupFrag extends DialogFragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 memeInfo = dataSnapshot.getValue(Meme.class);
 
-                price.setText("Price: " + memeInfo.getPrice());
+                //price.setText("Price: " + memeInfo.getPrice());
+
+                price.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        if(!price.getText().toString().isEmpty()) {
+                            pricePerShare = Float.parseFloat(s.toString());
+                            total.setText("Total: " + Double.toString(sharesOrdered * Float.parseFloat(s.toString())));
+                        } else {
+                            pricePerShare = Float.parseFloat(memeInfo.getPrice());
+                            total.setText("Total: 0");
+                        }
+                    }
+                });
 
                 shares.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
                     }
-
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                     }
@@ -140,7 +160,7 @@ public class OrderPopupFrag extends DialogFragment {
                     public void afterTextChanged(Editable s) {
                         if(!shares.getText().toString().isEmpty()) {
                             sharesOrdered = Integer.parseInt(s.toString());
-                            total.setText("Total: " + Double.toString(Integer.parseInt(s.toString()) * Double.parseDouble(memeInfo.getPrice())));
+                            total.setText("Total: " + Double.toString(Integer.parseInt(s.toString()) * pricePerShare));
                         } else {
                             sharesOrdered = 0;
                             total.setText("Total: 0");
@@ -150,7 +170,7 @@ public class OrderPopupFrag extends DialogFragment {
 
 
                 Log.wtf("zhao: memeinfo", memeInfo.getTicker());
-                total.setText("Total: " + Double.toString(sharesOrdered * Double.parseDouble(memeInfo.getPrice())));
+                total.setText("Total: " + Double.toString(sharesOrdered * pricePerShare));
 
 
 
@@ -190,8 +210,9 @@ public class OrderPopupFrag extends DialogFragment {
 
     private TextView money;
     private TextView total;
-    private TextView price;
+    private EditText price;
     private EditText shares;
     private int sharesOrdered = 0;
+    private float pricePerShare = 0;
 
 }

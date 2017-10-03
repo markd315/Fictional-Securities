@@ -57,7 +57,7 @@ public class OrderMatchingService extends Service {
                                     orderBook.setValue(memeOrderBook);
                                     return;
                                 } else {
-                                    buys.add(i - 1, order);
+                                    buys.add(i + 1, order);
                                     memeOrderBook.setBuy(buys);
                                     orderBook.setValue(memeOrderBook);
                                     return;
@@ -77,7 +77,7 @@ public class OrderMatchingService extends Service {
                                     orderBook.setValue(memeOrderBook);
                                     return;
                                 } else {
-                                    sells.add(i - 1, order);
+                                    sells.add(i + 1, order);
                                     memeOrderBook.setSell(sells);
                                     orderBook.setValue(memeOrderBook);
                                     return;
