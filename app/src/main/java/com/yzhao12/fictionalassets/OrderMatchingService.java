@@ -37,7 +37,7 @@ public class OrderMatchingService extends Service {
             final Order order = new Order(intent.getIntExtra("shares", -1), intent.getFloatExtra("price", -1), intent.getStringExtra("userid"));
             String ticker = intent.getStringExtra("ticker");
 
-            DatabaseReference orderBook = FirebaseDatabase.getInstance().getReference().child("Orders").child(ticker);
+            final DatabaseReference orderBook = FirebaseDatabase.getInstance().getReference().child("Orders").child(ticker);
             if(!trackedTickers.contains(intent.getStringExtra("ticker"))) {
                 orderBook.addValueEventListener(orderBookChecker);
                 trackedTickers.add(orderBook);
@@ -53,28 +53,40 @@ public class OrderMatchingService extends Service {
                             if(buys.get(i).getPrice() >= intent.getFloatExtra("price", -1)) {
                                 if(i == buys.size() - 1) {
                                     buys.add(order);
+                                    memeOrderBook.setBuy(buys);
+                                    orderBook.setValue(memeOrderBook);
                                     return;
                                 } else {
                                     buys.add(i - 1, order);
+                                    memeOrderBook.setBuy(buys);
+                                    orderBook.setValue(memeOrderBook);
                                     return;
                                 }
                             }
                         }
                         buys.add(0, order);
+                        memeOrderBook.setBuy(buys);
+                        orderBook.setValue(memeOrderBook);
                     } else if(intent.getIntExtra("type", -1) == R.id.order_sell) {
                         ArrayList<Order> sells = memeOrderBook.getSell();
                         for(int i = sells.size() - 1; i >= 0; i--) {
                             if(sells.get(i).getPrice() <= intent.getFloatExtra("price", -1)) {
                                 if(i == sells.size() - 1) {
                                     sells.add(order);
+                                    memeOrderBook.setSell(sells);
+                                    orderBook.setValue(memeOrderBook);
                                     return;
                                 } else {
                                     sells.add(i - 1, order);
+                                    memeOrderBook.setSell(sells);
+                                    orderBook.setValue(memeOrderBook);
                                     return;
                                 }
                             }
                         }
                         sells.add(0, order);
+                        memeOrderBook.setSell(sells);
+                        orderBook.setValue(memeOrderBook);
                     }
                 }
 
