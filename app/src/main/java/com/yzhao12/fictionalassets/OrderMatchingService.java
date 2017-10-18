@@ -8,7 +8,6 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Process;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.yzhao12.fictionalassets.DataObjects.Order;
 import com.yzhao12.fictionalassets.DataObjects.OrderMeme;
+import com.yzhao12.fictionalassets.DataObjects.PortfolioItem;
+import com.yzhao12.fictionalassets.DataObjects.User;
 
 import java.util.ArrayList;
 
@@ -38,13 +39,13 @@ public class OrderMatchingService extends Service {
             final Order order = new Order(intent.getIntExtra("shares", -1), intent.getFloatExtra("price", -1), intent.getStringExtra("userid"));
             String ticker = intent.getStringExtra("ticker");
 
-            final DatabaseReference orderBook = FirebaseDatabase.getInstance().getReference().child("Orders").child(ticker);
-            if(!trackedTickers.contains(intent.getStringExtra("ticker"))) {
-                orderBook.addValueEventListener(orderBookChecker);
-                trackedTickers.add(orderBook);
+            final DatabaseReference newTicker = FirebaseDatabase.getInstance().getReference().child("Orders").child(ticker);
+            if(!trackedTickers.contains(ticker)) {
+                newTicker.addValueEventListener(matcher);
+                trackedTickers.add(newTicker);
             }
 
-            orderBook.addListenerForSingleValueEvent(new ValueEventListener() {
+            newTicker.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     OrderMeme memeOrderBook = dataSnapshot.getValue(OrderMeme.class);
@@ -55,19 +56,19 @@ public class OrderMatchingService extends Service {
                                 if(i == buys.size() - 1) {
                                     buys.add(order);
                                     memeOrderBook.setBuy(buys);
-                                    orderBook.setValue(memeOrderBook);
+                                    newTicker.setValue(memeOrderBook);
                                     return;
                                 } else {
                                     buys.add(i + 1, order);
                                     memeOrderBook.setBuy(buys);
-                                    orderBook.setValue(memeOrderBook);
+                                    newTicker.setValue(memeOrderBook);
                                     return;
                                 }
                             }
                         }
                         buys.add(0, order);
                         memeOrderBook.setBuy(buys);
-                        orderBook.setValue(memeOrderBook);
+                        newTicker.setValue(memeOrderBook);
                     } else if(intent.getIntExtra("type", -1) == R.id.order_sell) {
                         ArrayList<Order> sells = memeOrderBook.getSell();
                         for(int i = sells.size() - 1; i >= 0; i--) {
@@ -75,19 +76,19 @@ public class OrderMatchingService extends Service {
                                 if(i == sells.size() - 1) {
                                     sells.add(order);
                                     memeOrderBook.setSell(sells);
-                                    orderBook.setValue(memeOrderBook);
+                                    newTicker.setValue(memeOrderBook);
                                     return;
                                 } else {
                                     sells.add(i + 1, order);
                                     memeOrderBook.setSell(sells);
-                                    orderBook.setValue(memeOrderBook);
+                                    newTicker.setValue(memeOrderBook);
                                     return;
                                 }
                             }
                         }
                         sells.add(0, order);
                         memeOrderBook.setSell(sells);
-                        orderBook.setValue(memeOrderBook);
+                        newTicker.setValue(memeOrderBook);
                     }
                 }
 
@@ -113,31 +114,64 @@ public class OrderMatchingService extends Service {
         mServiceHandler = new ServiceHandler(mServiceLooper);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        trackedTickers = new ArrayList<>();
-        orderBookChecker = new ValueEventListener() {
+        userProfileRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUser.getUid());
+        userProfileRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                userProfile = dataSnapshot.getValue(User.class);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        trackedTickers = new ArrayList<>();
+        Log.wtf("zhao:", "SERVICE ONCREATE()");
+        matcher = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.wtf("zhao:", "WHAT THE FUCK THIS SHOULD FIRE");
-
-
-                ArrayList<Order> buys = dataSnapshot.getValue(OrderMeme.class).getBuy();
-                ArrayList<Order> sells = dataSnapshot.getValue(OrderMeme.class).getSell();
+                OrderMeme thisMeme = dataSnapshot.getValue(OrderMeme.class);
+                ArrayList<Order> buys = thisMeme.getBuy();
+                ArrayList<Order> sells = thisMeme.getSell();
 
                 int i = 0;
                 int j = 0;
                 for( ; i < buys.size() && j < sells.size(); i++, j++) {
-                    if((buys.get(i).getUserid() == currentUser.getUid() || sells.get(i).getUserid() == currentUser.getUid()) &&
-                            buys.get(i).getPrice() >= sells.get(j).getPrice()) {
+                    DatabaseReference thisMemeref = FirebaseDatabase.getInstance().getReference().child("Orders").child(thisMeme.getTicker());
 
+                    if((buys.get(i).getUserid().equals(currentUser.getUid()) || sells.get(i).getUserid().equals(currentUser.getUid())) &&
+                            buys.get(i).getPrice() >= sells.get(j).getPrice()) {
                         Toast.makeText(OrderMatchingService.this, "MATCHED AN ORDER, SHARES: " + buys.get(i).getShares(), Toast.LENGTH_SHORT).show();
+
+                        ArrayList<PortfolioItem> portfolio = userProfile.getUserPortfolio();
+                        if(buys.get(i).getUserid().equals(currentUser.getUid())) {
+                            portfolio.add(new PortfolioItem(thisMeme.getTicker(), buys.get(i).getShares(), buys.get(i).getPrice()));
+                        } else if(sells.get(i).getUserid().equals(currentUser.getUid())) {
+                            for(int x = 0; x < portfolio.size(); x++) {
+                                if((portfolio.get(i).getTicker() == thisMeme.getTicker()) &&
+                                        (portfolio.get(i).getPrice() == buys.get(i).getPrice()) &&
+                                        (portfolio.get(i).getShares() == buys.get(i).getShares())) {
+
+                                }
+                            }
+                        }
+
                         buys.remove(i);
                         sells.remove(j);
+
+                        OrderMeme temp = new OrderMeme(thisMeme.getTicker());
+                        temp.setBuy(buys);
+                        temp.setSell(sells);
+                        thisMemeref.setValue(temp);
+
                         i--;
                         j--;
+                    } else {
+                        break;
                     }
                 }
-
             }
 
             @Override
@@ -179,6 +213,8 @@ public class OrderMatchingService extends Service {
     private ServiceHandler mServiceHandler;
 
     private FirebaseUser currentUser;
-    private ValueEventListener orderBookChecker;
+    private ValueEventListener matcher;
     private ArrayList<DatabaseReference> trackedTickers;
+    private DatabaseReference userProfileRef;
+    private User userProfile;
 }

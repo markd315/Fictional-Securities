@@ -15,7 +15,9 @@ public class OrderMeme extends Meme {
         super(null, ticker, null, null);
 
         buy = new ArrayList<>();
+        buy.add(new Order(0, 0, "hold"));
         sell = new ArrayList<>();
+        sell.add(new Order(0, 0, "hold"));
     }
 
     public ArrayList<Order> getBuy() {

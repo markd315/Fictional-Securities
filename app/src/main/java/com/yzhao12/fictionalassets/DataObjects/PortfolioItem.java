@@ -10,9 +10,10 @@ public class PortfolioItem {
         m_shares = -1;
     }
 
-    public PortfolioItem(String ticker, int shares) {
+    public PortfolioItem(String ticker, int shares, float price) {
         m_ticker = ticker;
         m_shares = shares;
+        m_price = price;
     }
 
     public String getTicker() {
@@ -31,6 +32,15 @@ public class PortfolioItem {
         m_shares = shares;
     }
 
+    public float getPrice() {
+        return m_price;
+    }
+
+    public void setPrice(float price) {
+        m_price = price;
+    }
+
     private String m_ticker;
     private int m_shares;
+    private float m_price;
 }
