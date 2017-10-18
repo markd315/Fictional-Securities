@@ -148,12 +148,16 @@ public class OrderMatchingService extends Service {
                         ArrayList<PortfolioItem> portfolio = userProfile.getUserPortfolio();
                         if(buys.get(i).getUserid().equals(currentUser.getUid())) {
                             portfolio.add(new PortfolioItem(thisMeme.getTicker(), buys.get(i).getShares(), buys.get(i).getPrice()));
+                            userProfile.setUserPortfolio(portfolio);
+                            userProfileRef.setValue(userProfile);
                         } else if(sells.get(i).getUserid().equals(currentUser.getUid())) {
                             for(int x = 0; x < portfolio.size(); x++) {
-                                if((portfolio.get(i).getTicker() == thisMeme.getTicker()) &&
-                                        (portfolio.get(i).getPrice() == buys.get(i).getPrice()) &&
-                                        (portfolio.get(i).getShares() == buys.get(i).getShares())) {
-
+                                if((portfolio.get(x).getTicker().equals(thisMeme.getTicker())) &&
+                                        (portfolio.get(x).getPrice() == buys.get(i).getPrice()) &&
+                                        (portfolio.get(x).getShares() == buys.get(i).getShares())) {
+                                    portfolio.remove(x);
+                                    userProfile.setUserPortfolio(portfolio);
+                                    userProfileRef.setValue(userProfile);
                                 }
                             }
                         }
