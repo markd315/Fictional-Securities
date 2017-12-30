@@ -65,15 +65,16 @@ public class MainActivity extends AppCompatActivity {
                         Log.wtf("zhao:", dataSnapshot.toString());
                         if(!dataSnapshot.exists()) {
                             ArrayList<PortfolioItem> emptyPortfolio = new ArrayList<PortfolioItem>();
-                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
-                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
-                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
-                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
-                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
-                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
-                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
-                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
-                            emptyPortfolio.add(new PortfolioItem("PEPE", 100));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100, 50));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100, 50));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100, 50));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100, 50));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100, 50));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100, 50));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100, 50));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100, 50));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100, 50));
+                            emptyPortfolio.add(new PortfolioItem("PEPE", 100, 50));
 
                             User newUser = new User(null, 5000, emptyPortfolio);
                             m_database.child(m_auth.getCurrentUser().getUid()).setValue(newUser);

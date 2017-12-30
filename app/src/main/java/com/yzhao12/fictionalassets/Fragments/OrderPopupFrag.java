@@ -50,7 +50,6 @@ public class OrderPopupFrag extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(getActivity(), "ORDER PLACED", Toast.LENGTH_LONG).show();
-
                         Intent sendOrder = new Intent(getActivity(), OrderMatchingService.class);
                         sendOrder.putExtra("shares", sharesOrdered);
                         sendOrder.putExtra("price", pricePerShare);
@@ -58,40 +57,6 @@ public class OrderPopupFrag extends DialogFragment {
                         sendOrder.putExtra("ticker", ticker);
                         sendOrder.putExtra("type", orderType.getCheckedRadioButtonId());
                         getActivity().startService(sendOrder);
-
-//                        meme = FirebaseDatabase.getInstance().getReference().child("Memes").child(ticker);
-//                        meme.addValueEventListener(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(DataSnapshot dataSnapshot) {
-//                                memeInfo = dataSnapshot.getValue(Meme.class);
-//                                final Order order = new Order(sharesOrdered, Float.parseFloat(memeInfo.getPrice()), FirebaseAuth.getInstance().getCurrentUser().getUid());
-//                                orders.child(ticker).addListenerForSingleValueEvent(new ValueEventListener() {
-//                                    @Override
-//                                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                                        OrderMeme orderMeme = dataSnapshot.getValue(OrderMeme.class);
-//                                        if(orderType.getCheckedRadioButtonId() == R.id.order_buy) {
-//                                            //ArrayList<Order> test = new ArrayList<Order>();
-//                                            ArrayList<Order> test = orderMeme.getBuy();
-//                                            test.add(order);
-//                                            orderMeme.setBuy(test);
-//                                        } else if(orderType.getCheckedRadioButtonId() == R.id.order_sell) {
-//                                            orderMeme.getSell().add(order);
-//                                        }
-//                                        orders.child(ticker).setValue(orderMeme);
-//                                    }
-//
-//                                    @Override
-//                                    public void onCancelled(DatabaseError databaseError) {
-//
-//                                    }
-//                                });
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(DatabaseError databaseError) {
-//
-//                            }
-//                        });
                     }
                 });
 

@@ -57,6 +57,8 @@ public class OrderMatchingService extends Service {
                                     buys.add(order);
                                     memeOrderBook.setBuy(buys);
                                     newTicker.setValue(memeOrderBook);
+
+
                                     return;
                                 } else {
                                     buys.add(i + 1, order);
@@ -156,6 +158,8 @@ public class OrderMatchingService extends Service {
                                         (portfolio.get(x).getPrice() == buys.get(i).getPrice()) &&
                                         (portfolio.get(x).getShares() == buys.get(i).getShares())) {
                                     portfolio.remove(x);
+
+                                    userProfile.setUserMoney(userProfile.getUserMoney() + buys.get(i).getShares() * buys.get(i).getPrice());
                                     userProfile.setUserPortfolio(portfolio);
                                     userProfileRef.setValue(userProfile);
                                 }

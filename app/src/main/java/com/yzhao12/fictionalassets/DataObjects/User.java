@@ -17,7 +17,7 @@ public class User {
 
     }
 
-    public User(Uri profilePicUrl, int money, ArrayList<PortfolioItem> portfolio) {
+    public User(Uri profilePicUrl, double money, ArrayList<PortfolioItem> portfolio) {
         m_profilePicUrl = profilePicUrl;
         m_userMoney = money;
         m_userPortfolio = portfolio;
@@ -31,11 +31,11 @@ public class User {
         m_profilePicUrl = profilePicUrl;
     }
 
-    public int getUserMoney() {
+    public double getUserMoney() {
         return m_userMoney;
     }
 
-    public void setUserMoney(int userMoney) {
+    public void setUserMoney(double userMoney) {
         m_userMoney = userMoney;
     }
 
@@ -51,7 +51,7 @@ public class User {
     private FirebaseUser m_userInstance;
 
     private Uri m_profilePicUrl;
-    private int m_userMoney;
+    private double m_userMoney;
     private ArrayList<PortfolioItem> m_userPortfolio;
 
 }

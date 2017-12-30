@@ -50,8 +50,8 @@ public class ProfilePageFrag extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue(User.class) != null) {
-                    profileMoney.setText(Integer.toString(dataSnapshot.getValue(User.class).getUserMoney()));
-                    Log.wtf("zhao:", Integer.toString(dataSnapshot.getValue(User.class).getUserMoney()));
+                    profileMoney.setText(Double.toString(dataSnapshot.getValue(User.class).getUserMoney()));
+                    Log.wtf("zhao:", Double.toString(dataSnapshot.getValue(User.class).getUserMoney()));
                     ArrayList<PortfolioItem> portfolio = dataSnapshot.getValue(User.class).getUserPortfolio();
                     portfolioAdapter = new PortfolioAdapter(getActivity(), R.layout.profile_portfolio_item, portfolio);
                     if (portfolio != null) {
