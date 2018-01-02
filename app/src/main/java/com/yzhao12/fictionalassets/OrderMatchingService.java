@@ -158,6 +158,7 @@ public class OrderMatchingService extends Service {
 
                     if((buys.get(i).getUserid().equals(currentUser.getUid()) || sells.get(i).getUserid().equals(currentUser.getUid())) &&
                             buys.get(i).getPrice() >= sells.get(j).getPrice()) {
+
                         Toast.makeText(OrderMatchingService.this, "MATCHED AN ORDER, SHARES: " + buys.get(i).getShares(), Toast.LENGTH_SHORT).show();
                         ArrayList<PortfolioItem> portfolio = userProfile.getUserPortfolio();
                         if(buys.get(i).getUserid().equals(currentUser.getUid())) {
