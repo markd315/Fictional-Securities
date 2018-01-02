@@ -37,7 +37,7 @@ public class OrderMatchingService extends Service {
         public void handleMessage(Message msg) {
             final Intent intent = (Intent)msg.obj;
             final Order order = new Order(intent.getIntExtra("shares", -1), intent.getFloatExtra("price", -1), intent.getStringExtra("userid"));
-            String ticker = intent.getStringExtra("ticker");
+            final String ticker = intent.getStringExtra("ticker");
 
             final DatabaseReference newTicker = FirebaseDatabase.getInstance().getReference().child("Orders").child(ticker);
             if(!trackedTickers.contains(ticker)) {
@@ -54,16 +54,28 @@ public class OrderMatchingService extends Service {
                         for(int i = buys.size() - 1; i >= 0; i--) {
                             if(buys.get(i).getPrice() >= intent.getFloatExtra("price", -1)) {
                                 if(i == buys.size() - 1) {
+                                    //adding the buy order to the correct position in the orderbook
                                     buys.add(order);
                                     memeOrderBook.setBuy(buys);
                                     newTicker.setValue(memeOrderBook);
 
+                                    //subtracting the appropriate amount of money
+                                    userProfile.setUserMoney(userProfile.getUserMoney() - (order.getPrice() * order.getShares()));
 
                                     return;
                                 } else {
+                                    //adding the sell order to the correct position in the orderbook
                                     buys.add(i + 1, order);
                                     memeOrderBook.setBuy(buys);
                                     newTicker.setValue(memeOrderBook);
+
+                                    //subtracting the appropriate amount of shares
+                                    ArrayList<PortfolioItem> temp = userProfile.getUserPortfolio();
+                                    for(PortfolioItem p : temp) {
+                                        if(p.getTicker().equals(ticker)) {
+                                            p.setShares(p.getShares() - order.getShares());
+                                        }
+                                    }
                                     return;
                                 }
                             }
@@ -130,6 +142,7 @@ public class OrderMatchingService extends Service {
         });
         trackedTickers = new ArrayList<>();
         Log.wtf("zhao:", "SERVICE ONCREATE()");
+
         matcher = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
